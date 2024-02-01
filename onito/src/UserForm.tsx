@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 //import DataTable from 'react-data-table-component';
 import { setStep, setFirstName, setLastName, setEmail, setAge, setSex, setMobile, setGovtIdType, setGovtId, setAddress, setState, setCity, setCountry, setPincode, resetUser } from './store/userSlice';
 import DataTable, { TableColumn } from 'react-data-table-component';
-
+import "./userform.css"
 const schema = object({
   firstName: string().required('First Name is required').min(3, 'Minimum 3 characters'),
   lastName: string().required('Last Name is required'),
@@ -110,7 +110,8 @@ console.log("data",userData);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} onReset={handleReset}>
+    <>
+     <form className="user-form"  onSubmit={handleSubmit(onSubmit)} onReset={handleReset}>
       <Stepper activeStep={step - 1}>
         <Step>
           <StepLabel>Step 1</StepLabel>
@@ -150,7 +151,7 @@ console.log("data",userData);
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <Select {...field} label="Sex">
+              <Select {...field} label="Sex" className="select-field">
                 <MenuItem value="Male">Male</MenuItem>
                 <MenuItem value="Female">Female</MenuItem>
               </Select>
@@ -167,7 +168,7 @@ console.log("data",userData);
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <Select {...field} label="Government ID Type">
+              <Select {...field} label="Government ID Type" className="select-field">
                 <MenuItem value="Aadhar">Aadhar</MenuItem>
                 <MenuItem value="PAN">PAN</MenuItem>
               </Select>
@@ -233,21 +234,27 @@ console.log("data",userData);
     />
   </>
 )}
+<br />
+<div className="button-container">
+        <Button type="submit" variant="contained" color="primary" className="submit-button">
+          {step === 1 ? 'Next' : 'Submit'}
+        </Button>
+        <Button type="reset" variant="contained" color="secondary" className="reset-button">
+          Reset
+        </Button>
+      </div>
 
-      <Button type="submit" variant="contained" color="primary">
-        {step === 1 ? 'Next' : 'Submit'}
-      </Button>
-      <Button type="reset" variant="contained" color="secondary" style={{ marginLeft: '10px' }}>
-        Reset
-      </Button>
-
-      <DataTable
-        title="Submitted Users"
-        columns={columns}
-        data={[userData]}
-        pagination
-      />
+     
     </form>
+     <DataTable
+     title="Submitted Users"
+     columns={columns}
+     data={[userData]}
+     pagination
+     className="data-table"
+   />
+    </>
+   
   );
 };
 
